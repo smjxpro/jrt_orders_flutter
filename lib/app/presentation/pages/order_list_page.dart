@@ -45,7 +45,7 @@ class OrderListPage extends StatelessWidget {
                           Row(
                             children: [
                               Icon(
-                                Icons.person_outline,
+                                Icons.person_pin,
                                 color: Colors.deepOrangeAccent,
                               ),
                               SizedBox(
@@ -62,7 +62,9 @@ class OrderListPage extends StatelessWidget {
                           Container(
                               padding: EdgeInsets.all(4),
                               decoration: BoxDecoration(
-                                  color: Colors.red,
+                                  color: order.orderStatus == 'SHIPPED'
+                                      ? Colors.green
+                                      : Colors.red,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4))),
                               child: Text(
