@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/string_extensions.dart';
+import 'package:get/get.dart';
+import 'package:orders/app/_utls/utils.dart';
 import 'package:orders/app/domain/entities/order.dart';
+import 'package:orders/app/presentation/widgets/map_widget.dart';
 
 class OrderDetailsPage extends StatelessWidget {
   static const routeName = '/order-details';
 
   @override
   Widget build(BuildContext context) {
-    final order = ModalRoute.of(context)!.settings.arguments as Order?;
-
+    final order = ModalRoute.of(context)!.settings.arguments as Order;
     return Scaffold(
       appBar: AppBar(
         title: Text('Order Details'),
@@ -38,24 +39,29 @@ class OrderDetailsPage extends StatelessWidget {
                             width: 4,
                           ),
                           Text(
-                            "${order!.customerName!.capitalize}",
+                            "${order.customerName!.capitalize}",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           )
                         ],
                       ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.phone,
-                            color: Colors.indigoAccent,
-                          ),
-                          Text('${order.phoneNumber}'),
-                          SizedBox(
-                            width: 8,
-                          ),
-                        ],
+                      InkWell(
+                        onTap: () {
+                          Utils.launchURL('tel:${order.phoneNumber}');
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.phone,
+                              color: Colors.indigoAccent,
+                            ),
+                            Text('${order.phoneNumber}'),
+                            SizedBox(
+                              width: 8,
+                            ),
+                          ],
+                        ),
                       ),
                       Row(
                         children: [
@@ -157,7 +163,10 @@ class OrderDetailsPage extends StatelessWidget {
                                 width: 4,
                               ),
                               Text('Total Amount: '),
-                              Text('${order.orderAmount}'),
+                              Text(
+                                '${order.orderAmount} BDT',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                         ],
@@ -192,7 +201,7 @@ class OrderDetailsPage extends StatelessWidget {
                                 width: 4,
                               ),
                               Text(
-                                "${order.paymentMethod}",
+                                "${order.paymentMethod!.replaceAll('_', '')}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -200,32 +209,21 @@ class OrderDetailsPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.payment,
-                                color: Colors.blueGrey,
-                              ),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                    color: order.paymentStatus == 'NOT_PAID'
-                                        ? Colors.red
-                                        : Colors.green,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4))),
-                                child: Text(
-                                  '${order.paymentStatus!.replaceAll('_', " ")}',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                            ],
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                                color: order.paymentStatus == 'NOT_PAID'
+                                    ? Colors.red
+                                    : Colors.green,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(4))),
+                            child: Text(
+                              '${order.paymentStatus!.replaceAll('_', " ")}',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ],
                       ),
@@ -239,7 +237,10 @@ class OrderDetailsPage extends StatelessWidget {
                           SizedBox(
                             width: 4,
                           ),
-                          Text('${order.payableAmount}'),
+                          Text(
+                            '${order.payableAmount} BDT',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                     ],
@@ -379,7 +380,10 @@ class OrderDetailsPage extends StatelessWidget {
                           SizedBox(
                             width: 4,
                           ),
-                          Text('${order.courierStatus}'),
+                          Text(
+                            '${order.courierStatus}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                       Row(
@@ -392,7 +396,10 @@ class OrderDetailsPage extends StatelessWidget {
                           SizedBox(
                             width: 4,
                           ),
-                          Text('${order.shippingMethod}'),
+                          Text(
+                            '${order.shippingMethod}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                     ],
@@ -402,7 +409,13 @@ class OrderDetailsPage extends StatelessWidget {
               SizedBox(
                 height: 4,
               ),
-              Card(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 250,
+                  child: MapWidget(order.customerAddress!),
+                ),
+              ),
             ],
           ),
         ),
