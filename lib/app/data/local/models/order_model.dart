@@ -24,7 +24,7 @@ class OrderModel extends Order {
     int? payableAmount,
     int? numberOfProduct,
     String? customerName,
-    String? customerAddress,
+    required String customerAddress,
     String? customerArea,
     String? customerCity,
     String? customerCountry,

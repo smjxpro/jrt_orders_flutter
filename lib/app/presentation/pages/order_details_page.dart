@@ -43,7 +43,7 @@ class OrderDetailsPage extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     height: 250,
-                    child: MapWidget(order.customerAddress!),
+                    child: MapWidget(order.customerAddress),
                   ),
                 ),
               ],

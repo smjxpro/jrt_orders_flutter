@@ -10,7 +10,7 @@ class Order {
     this.payableAmount,
     this.numberOfProduct,
     this.customerName,
-    this.customerAddress,
+    required this.customerAddress,
     this.customerArea,
     this.customerCity,
     this.customerCountry,
@@ -32,7 +32,7 @@ class Order {
   int? payableAmount;
   int? numberOfProduct;
   String? customerName;
-  String? customerAddress;
+  String customerAddress;
   String? customerArea;
   String? customerCity;
   String? customerCountry;
