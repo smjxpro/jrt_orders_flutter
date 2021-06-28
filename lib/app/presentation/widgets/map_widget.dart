@@ -34,50 +34,52 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Container(
-          child: FutureBuilder<Location>(
-              future: getLocation(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text("An error occurred"),
-                  );
-                }
-                if (snapshot.hasData) {
-                  return FlutterMap(
-                    mapController: mapController,
-                    options: MapOptions(
-                      center: LatLng(
-                          snapshot.data!.latitude, snapshot.data!.longitude),
-                      zoom: 15.0,
-                    ),
-                    layers: [
-                      TileLayerOptions(
-                          urlTemplate:
-                              "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                          subdomains: ['a', 'b', 'c']),
-                      MarkerLayerOptions(
-                        markers: [
-                          Marker(
-                            width: 80.0,
-                            height: 80.0,
-                            point: LatLng(snapshot.data!.latitude,
-                                snapshot.data!.longitude),
-                            builder: (ctx) => Container(
-                              child: Icon(Icons.location_pin),
-                            ),
-                          ),
-                        ],
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Container(
+            child: FutureBuilder<Location>(
+                future: getLocation(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text("An error occurred"),
+                    );
+                  }
+                  if (snapshot.hasData) {
+                    return FlutterMap(
+                      mapController: mapController,
+                      options: MapOptions(
+                        center: LatLng(
+                            snapshot.data!.latitude, snapshot.data!.longitude),
+                        zoom: 15.0,
                       ),
-                    ],
+                      layers: [
+                        TileLayerOptions(
+                            urlTemplate:
+                                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                            subdomains: ['a', 'b', 'c']),
+                        MarkerLayerOptions(
+                          markers: [
+                            Marker(
+                              width: 80.0,
+                              height: 80.0,
+                              point: LatLng(snapshot.data!.latitude,
+                                  snapshot.data!.longitude),
+                              builder: (ctx) => Container(
+                                child: Icon(Icons.location_pin),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
                   );
-                }
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }),
+                }),
+          ),
         ),
       ),
     );

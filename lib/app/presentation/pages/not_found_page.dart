@@ -5,11 +5,13 @@ class NotFoundPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          "Not Found",
-          style: TextStyle(color: Colors.red, fontSize: 24),
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Text(
+            "Not Found",
+            style: TextStyle(color: Colors.red, fontSize: 24),
+          ),
         ),
       ),
     );
