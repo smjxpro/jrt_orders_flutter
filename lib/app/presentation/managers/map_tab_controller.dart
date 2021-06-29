@@ -8,6 +8,7 @@ class MapTabController extends GetxController
     with StateMixin<List<MarkerData>> {
   final orderList = RxList<Order>();
 
+  //TODO find a way to do performance intensive task on a separate isolate
   Future<List<MarkerData>> getMarkerDataList() async {
     List<MarkerData> list = [];
     orderList.forEach((element) async {

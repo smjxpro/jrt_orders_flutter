@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orders/app/presentation/managers/order_list_page_controller.dart';
+import 'package:orders/app/presentation/widgets/order_list_page_drawer.dart';
 import 'package:orders/app/presentation/widgets/map_tab.dart';
 import 'package:orders/app/presentation/widgets/order_tile.dart';
 
@@ -17,15 +18,7 @@ class OrderListPage extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            title: Row(
-              children: [
-                Icon(Icons.shopping_bag),
-                SizedBox(
-                  width: 4,
-                ),
-                Text("Orders"),
-              ],
-            ),
+            title: Text("Orders"),
             actions: [
               Obx(
                 () => controller.tabIndex.value != 0
@@ -75,6 +68,7 @@ class OrderListPage extends StatelessWidget {
               ],
             ),
           ),
+          drawer: OrderListPageDrawer(),
           body: TabBarView(children: [
             Obx(
               () => ListView.builder(

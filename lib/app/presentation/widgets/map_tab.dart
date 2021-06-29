@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:orders/app/domain/entities/order.dart';
 import 'package:orders/app/presentation/managers/map_tab_controller.dart';
+import 'package:orders/app/presentation/pages/order_details_page.dart';
 
 class MapTab extends StatelessWidget {
   static const routeName = '/map-tab';
@@ -20,14 +21,12 @@ class MapTab extends StatelessWidget {
           height: 80.0,
           point: LatLng(element.location.latitude, element.location.longitude),
           builder: (ctx) => Container(
-            child: Column(
-              children: [
-                Icon(Icons.location_pin),
-                SizedBox(
-                  height: 4,
-                ),
-                Text('${element.order.customerName}'),
-              ],
+            child: IconButton(
+              icon: Icon(Icons.location_pin),
+              onPressed: () {
+                Navigator.of(context).pushNamed(OrderDetailsPage.routeName,
+                    arguments: element.order);
+              },
             ),
           ),
         );
